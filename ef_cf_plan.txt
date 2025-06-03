@@ -1,0 +1,55 @@
+- GitHub:
+1. Create a public repo w/ a Vs .gitignore
+2. Create your web app in rider
+3. Init git: 
+	git init
+	echo "name" > README.md
+	git add README.md
+	git commit -m "Added README.md"
+	git remote add origin https://github.com/Joykeeper/repo-name.git
+	git branch -M main
+	git pull origin main
+	git push origin main
+	
+
+Project:
+1. Add Models, Controllers, Services, DTOs, Data, Exceptions folders
+2. Install Nuget packages: 
+	Microsoft.EntityFrameworkCore
+	Microsoft.EntityFrameworkCore.SqlServer
+	Microsoft.EntityFrameworkCore.Tools
+	Microsoft.EntityFrameworkCore.Design
+	
+3. Create Model Classes according to database (copy code):
+	3.1 Add constraints: Key, required, StringLength, Column("name"), DataType(DataType.Date), [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true),
+	NotMapped(if in model but not in db)
+	3.2 Add navigation property like: public virtual ICollection<Enrollment> Enrollments { get; set; }
+		and public virtual Patient Patient { get; set; } (for FK)
+		
+
+4. Create DatabaseContext.cs in Data folder. There set the constraints(copy code). Don't forget that there can be complex PKs.
+
+5. Create and run migrations:
+	dotnet ef migrations --project [project name] add InitialCreate // in Rider: Tools -> EntityFramework -> Add Migration -> choose dbcontext, name and create
+	dotnet ef database --project [project name] update // in Rider -> .. -> Update Database
+
+6. Setting up the connection string in appsettings.json:
+	{
+	"ConnectionStrings": {
+		"DefaultConnection": "Server=
+			(localdb)\\mssqllocaldb;Database=[mydbname];Trusted_Connection=True;MultipleActiveResultSets=true"
+		}
+	}
+
+7. Program.cs(copy code)
+
+# For each task (focus on one task at once)
+
+8. Create DTOs based on the task 
+9. Create Controllers based on the task (create exception handling)
+10. Create IDbService interface and DbService.cs in Servicxes folder
+	Include throwing right Exception(create if needed)
+	Includes in LINQ not necessary if you project on Dtos.
+
+11. Create test data in ???
+12. Test through Postman
